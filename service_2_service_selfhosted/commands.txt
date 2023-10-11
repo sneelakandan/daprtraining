@@ -1,0 +1,11 @@
+#servicetoservice invocation self hosted. 
+
+#First run the serviceB with the command
+
+dapr run --app-id serviceB --dapr-http-port 3501 --app-port 4000 python .\serviceB.py
+
+
+#Next run the ServiceA with the command.
+
+dapr run --app-id serviceA --dapr-http-port 3500 --app-port 3000 python serviceA.py
+
