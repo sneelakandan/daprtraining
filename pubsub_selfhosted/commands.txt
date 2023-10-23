@@ -1,0 +1,5 @@
+# Command for running producer
+dapr run --app-id publisher_dapr_app_id --app-port 5000 --dapr-http-port 3500 -d .\components\ python producer.py
+
+#command for running consumer
+ dapr run --app-id consumer --app-port 3000 --components-path .\components\ python .\consumer.py
