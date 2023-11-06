@@ -1,4 +1,4 @@
-# app.py
+# serviceA.py
 from flask import Flask, request, jsonify
 import requests
 
@@ -24,21 +24,20 @@ def set_key_value():
 
 @app.route('/get/<key>', methods=['GET'])
 def get_value(key):
-    app_id = 'my-python-app'
 
-    headers = {
-        'Content-Type': 'application/json',
-        'dapr-app-id': app_id,
-    }
 
     url = f'http://127.0.0.1:3500/v1.0/state/statestore/{key}'  # Use statestore as the store name
-    response = requests.get(url, headers=headers)
-
+    response = requests.get(url)
+    
+    
     if response.status_code == 200:
         try:
-            value = response.json()[0]['value']
+            print('Dapr response is ', response.status_code, response.text)
+            value = response.json()
             return jsonify({'key': key, 'value': value})
+           
         except (IndexError, KeyError):
+            print("value of key received is ", key)
             return jsonify({'message': 'Invalid response format from Dapr.'}, 500)
     else:
         return jsonify({'message': f'Key "{key}" not found in the state store.'}, 404)
